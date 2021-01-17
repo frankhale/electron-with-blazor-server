@@ -4,10 +4,8 @@
 # Custom for Visual Studio
 *.js     linguist-language=javascript
 *.cs	 linguist-language=csharp
-*.html   linguist-language=javascript
-*.html   linguist-detectable=false
-*.css    linguist-detectable=false
-*.css    linguist-language=javascript
+*.html   -linguist-vendored
+*.css    -linguist-vendored
 
 # Standard to msysgit
 *.doc	 diff=astextplain
