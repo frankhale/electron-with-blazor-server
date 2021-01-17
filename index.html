@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Electron with Blazor Server</title>
+
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    #loading {
+      position: absolute;
+      width: 100%;
+      top: 45%;
+      text-align: center;
+    }
+
+    #serverLog {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+      overflow: auto;
+    }
+
+    .app {
+      display: flex !important;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .appHide {
+      flex: 0 1;
+      width: 0px;
+      height: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loading">
+    Loading...
+  </div>
+  <div id="serverLog"></div>
+  <iframe id="app" class="app" frameborder="0"></iframe>
+
+  <script>
+    window.$ = window.jQuery = require("./node_modules/jquery/dist/jquery.min.js");
+
+    const { ipcRenderer } = require("electron"),
+      appUrl = "https://127.0.0.1:5001",
+      spawn = require("child_process").spawn,
+      path = require("path"),
+      // For electron-packager change cwd in spawn to app.getAppPath() and
+      // uncomment the app require below
+      //app = require('electron').remote.app,
+      dotnet = spawn(
+        "dotnet",
+        ["run"],
+        {
+          cwd: process.cwd() + path.sep + "blazor-server-app"
+        }
+      ),
+      request = require("request"),
+      _ = require("lodash"),
+      $serverLog = $("#serverLog"),
+      $app = $("#app"),
+      $loading = $("#loading");
+
+    ipcRenderer.on("stop-server", (event, data) => {
+      dotnet.kill("SIGINT");
+    });
+
+    ipcRenderer.on("show-server-log", (event, data) => {
+      if ($serverLog.css("display") === "none") {
+        $serverLog.css("display", "block");
+        $app.addClass("appHide");
+      } else {
+        $app.removeClass("appHide");
+        $serverLog.css("display", "none");
+      }
+    });
+
+    function strip(s) {
+      // regex from: http://stackoverflow.com/a/29497680/170217
+      return s.replace(
+        /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+        ""
+      );
+    }
+
+    function redirectOutput(x) {
+      let lineBuffer = "";
+
+      x.on("data", function (data) {
+        lineBuffer += data.toString();
+        let lines = lineBuffer.split("\n");
+
+        _.forEach(lines, l => {
+          if (l !== "") {
+            $serverLog.append(strip(l) + "<br/>");
+          }
+        });
+
+        lineBuffer = lines[lines.length - 1];
+      });
+    }
+
+    redirectOutput(dotnet.stdout);
+    redirectOutput(dotnet.stderr);
+
+    let checkServerRunning = setInterval(() => {
+      request({
+        uri: appUrl,
+        strictSSL: false
+      }, (error, response, body) => {
+        console.log(error);
+
+        if (!error && response.statusCode == 200) {
+          $app.attr("src", appUrl);
+          $loading.css("display", "none");
+          $app.css("display", "block");
+          clearInterval(checkServerRunning);
+        }
+      });
+    }, 1000);
+  </script>
+</body>
+
+</html>

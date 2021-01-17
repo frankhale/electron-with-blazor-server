@@ -1,0 +1,22 @@
+{
+  "name": "electron-with-blazor-server",
+  "description": "Demonstrates spawning Blazor Server from Electron and using it to serve content",
+  "version": "0.1.0",
+  "main": "main.js",
+  "authors": [
+    "Frank Hale <frankhale@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": ".\\node_modules\\node\\bin\\node.exe start-electron.js"
+  },
+  "dependencies": {
+    "electron": "11.2.0",
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
+    "node": "^15.4.0",
+    "request": "^2.88.2",
+    "strip": "^3.0.0"
+  }
+}
