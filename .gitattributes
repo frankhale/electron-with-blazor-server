@@ -2,9 +2,7 @@
 * text=auto
 
 * linguist-vendored
-* linguist-detectable=false
+index.html -linguist-documentation
 
-*.js linguist-detectable=true
-*.cs linguist-detectable=true
 *.js linguist-vendored=false
 *.cs linguist-vendored=false
