@@ -1,10 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-*.js     linguist-language=JavaScript
-*.cs	 linguist-language=C#
-*.html   linguist-detectable=false
-*.css    linguist-detectable=false
+*.js linguist-language=JavaScript
+*.cs linguist-language=C#
+*.html linguist-detectable=false
+*.css linguist-detectable=false
 
 # Standard to msysgit
 *.doc	 diff=astextplain
