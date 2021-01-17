@@ -4,7 +4,7 @@
 # Custom for Visual Studio
 *.js     linguist-language=javascript
 *.cs	 linguist-language=csharp
-*.html   linguist-vendored
+index.html   linguist-vendored
 *.css    linguist-vendored
 
 # Standard to msysgit
