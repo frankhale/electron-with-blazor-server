@@ -3,6 +3,7 @@
 
 # Custom for Visual Studio
 *.js     linguist-language=javascript
+*.cs	 linguist-language=csharp
 *.html   linguist-detectable=false
 *.css    linguist-detectable=false
 
