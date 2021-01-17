@@ -3,7 +3,8 @@
 
 *.js     linguist-language=JavaScript
 *.cs	 linguist-language=C#
-*.html   linguist-vendored
+*.html   linguist-detectable=false
+*.css    linguist-detectable=false
 
 # Standard to msysgit
 *.doc	 diff=astextplain
