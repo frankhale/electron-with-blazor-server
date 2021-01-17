@@ -1,12 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-# Custom for Visual Studio
+* linguist-vendored
 *.js     linguist-language=JavaScript
 *.cs	 linguist-language=C#
-index.html  linguist-vendored=true
-*.css   linguist-detectable=false
-
 
 # Standard to msysgit
 *.doc	 diff=astextplain
