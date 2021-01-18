@@ -62,8 +62,14 @@
       dotnet = spawn(
         "dotnet",
         ["run"],
+        //"blazor-server-app.exe", [],
         {
           cwd: process.cwd() + path.sep + "blazor-server-app"
+          // cwd: process.cwd() + path.sep + "blazor-server-app" +
+          //   path.sep + "bin" +
+          //   path.sep + "Release" +
+          //   path.sep + "net5.0" +
+          //   path.sep + "publish"
         }
       ),
       request = require("request"),
